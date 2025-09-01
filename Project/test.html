@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>St. Mary's Parish - Online Services</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .calendar-day {
+            min-height: 100px;
+            border: 1px solid #e5e7eb;
+        }
+        .mass-slot {
+            font-size: 0.75rem;
+            padding: 2px 4px;
+            margin: 1px 0;
+            border-radius: 3px;
+        }
+        .booked { background-color: #fecaca; }
+        .available { background-color: #dcfce7; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-blue-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-3">
+                    <div class="text-3xl">⛪</div>
+                    <div>
+                        <h1 class="text-2xl font-bold">St. Mary's Parish</h1>
+                        <p class="text-blue-200">Serving our community with faith and love</p>
+                    </div>
+                </div>
+                <nav class="hidden md:flex space-x-6">
+                    <button onclick="showSection('home')" class="nav-btn hover:text-blue-200 transition-colors">Home</button>
+                    <button onclick="showSection('booking')" class="nav-btn hover:text-blue-200 transition-colors">Book Mass</button>
+                    <button onclick="showSection('certificates')" class="nav-btn hover:text-blue-200 transition-colors">Certificates</button>
+                    <button onclick="showSection('calendar')" class="nav-btn hover:text-blue-200 transition-colors">Calendar</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation -->
+    <nav class="md:hidden bg-blue-800 text-white">
+        <div class="container mx-auto px-4 py-3 flex space-x-4 overflow-x-auto">
+            <button onclick="showSection('home')" class="nav-btn whitespace-nowrap px-3 py-1 rounded hover:bg-blue-700">Home</button>
+            <button onclick="showSection('booking')" class="nav-btn whitespace-nowrap px-3 py-1 rounded hover:bg-blue-700">Book Mass</button>
+            <button onclick="showSection('certificates')" class="nav-btn whitespace-nowrap px-3 py-1 rounded hover:bg-blue-700">Certificates</button>
+            <button onclick="showSection('calendar')" class="nav-btn whitespace-nowrap px-3 py-1 rounded hover:bg-blue-700">Calendar</button>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-8">
+        <!-- Home Section -->
+        <section id="home" class="section">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold text-gray-800 mb-4">Welcome to Our Parish</h2>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">Experience faith, community, and spiritual growth. Book masses for special occasions, request certificates, and stay connected with our parish calendar.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 mb-12">
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">📅</div>
+                    <h3 class="text-xl font-semibold mb-3">Book Mass</h3>
+                    <p class="text-gray-600 mb-4">Schedule masses for weddings, baptisms, memorials, and other special occasions.</p>
+                    <button onclick="showSection('booking')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Book Now</button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">📜</div>
+                    <h3 class="text-xl font-semibold mb-3">Request Certificates</h3>
+                    <p class="text-gray-600 mb-4">Request baptism, marriage, confirmation, and other official church certificates.</p>
+                    <button onclick="showSection('certificates')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">Request</button>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-md p-6 text-center hover:shadow-lg transition-shadow">
+                    <div class="text-4xl mb-4">🗓️</div>
+                    <h3 class="text-xl font-semibold mb-3">View Calendar</h3>
+                    <p class="text-gray-600 mb-4">Check available time slots and see scheduled masses throughout the month.</p>
+                    <button onclick="showSection('calendar')" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors">View Calendar</button>
+                </div>
+            </div>
+
+            <div class="bg-blue-50 rounded-lg p-8 text-center">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-4">Mass Schedule</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">Weekdays</h4>
+                        <p class="text-gray-600">Monday - Friday: 7:00 AM, 12:00 PM</p>
+                        <p class="text-gray-600">Saturday: 7:00 AM, 6:00 PM (Vigil)</p>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-lg mb-2">Sundays</h4>
+                        <p class="text-gray-600">8:00 AM, 10:00 AM, 12:00 PM, 6:00 PM</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mass Booking Section -->
+        <section id="booking" class="section hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Book a Mass</h2>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+                <form id="massBookingForm">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                            <input type="tel" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Mass Type *</label>
+                            <select required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="">Select Mass Type</option>
+                                <option value="wedding">Wedding Mass</option>
+                                <option value="baptism">Baptism</option>
+                                <option value="memorial">Memorial Mass</option>
+                                <option value="thanksgiving">Thanksgiving Mass</option>
+                                <option value="special">Special Intention</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Date *</label>
+                            <input type="date" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Preferred Time *</label>
+                        <select required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Time</option>
+                            <option value="8:00 AM">8:00 AM</option>
+                            <option value="10:00 AM">10:00 AM</option>
+                            <option value="12:00 PM">12:00 PM</option>
+                            <option value="2:00 PM">2:00 PM</option>
+                            <option value="4:00 PM">4:00 PM</option>
+                            <option value="6:00 PM">6:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Special Requests or Notes</label>
+                        <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Any special requirements, number of guests, etc."></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold">Proceed to Payment</button>
+                </form>
+
+                <!-- Payment Section for Mass Booking -->
+                <div id="massPaymentSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg border">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Complete Your Payment</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Payment Details -->
+                        <div class="bg-white p-4 rounded-lg">
+                            <h4 class="font-semibold mb-3">Payment Details</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Mass Booking Fee:</span>
+                                    <span class="font-semibold">$50.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Processing Fee:</span>
+                                    <span class="font-semibold">$2.50</span>
+                                </div>
+                                <div class="border-t pt-2 flex justify-between font-semibold">
+                                    <span>Total Amount:</span>
+                                    <span>$52.50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- QR Code Payment -->
+                        <div class="bg-white p-4 rounded-lg text-center">
+                            <h4 class="font-semibold mb-3">Scan to Pay</h4>
+                            <div class="bg-gray-100 p-4 rounded-lg mb-3">
+                                <!-- QR Code SVG -->
+                                <svg width="150" height="150" viewBox="0 0 150 150" class="mx-auto">
+                                    <rect width="150" height="150" fill="white"/>
+                                    <!-- QR Code pattern -->
+                                    <g fill="black">
+                                        <!-- Corner squares -->
+                                        <rect x="10" y="10" width="30" height="30"/>
+                                        <rect x="110" y="10" width="30" height="30"/>
+                                        <rect x="10" y="110" width="30" height="30"/>
+                                        <!-- Inner corner squares -->
+                                        <rect x="15" y="15" width="20" height="20" fill="white"/>
+                                        <rect x="115" y="15" width="20" height="20" fill="white"/>
+                                        <rect x="15" y="115" width="20" height="20" fill="white"/>
+                                        <rect x="20" y="20" width="10" height="10"/>
+                                        <rect x="120" y="20" width="10" height="10"/>
+                                        <rect x="20" y="120" width="10" height="10"/>
+                                        <!-- Data pattern -->
+                                        <rect x="50" y="20" width="5" height="5"/>
+                                        <rect x="60" y="20" width="5" height="5"/>
+                                        <rect x="70" y="20" width="5" height="5"/>
+                                        <rect x="80" y="20" width="5" height="5"/>
+                                        <rect x="90" y="20" width="5" height="5"/>
+                                        <rect x="50" y="30" width="5" height="5"/>
+                                        <rect x="70" y="30" width="5" height="5"/>
+                                        <rect x="90" y="30" width="5" height="5"/>
+                                        <rect x="50" y="40" width="5" height="5"/>
+                                        <rect x="60" y="40" width="5" height="5"/>
+                                        <rect x="80" y="40" width="5" height="5"/>
+                                        <rect x="90" y="40" width="5" height="5"/>
+                                        <!-- More pattern elements -->
+                                        <rect x="20" y="50" width="5" height="5"/>
+                                        <rect x="30" y="50" width="5" height="5"/>
+                                        <rect x="50" y="50" width="5" height="5"/>
+                                        <rect x="70" y="50" width="5" height="5"/>
+                                        <rect x="90" y="50" width="5" height="5"/>
+                                        <rect x="110" y="50" width="5" height="5"/>
+                                        <rect x="120" y="50" width="5" height="5"/>
+                                        <rect x="130" y="50" width="5" height="5"/>
+                                        <!-- Center alignment pattern -->
+                                        <rect x="70" y="70" width="10" height="10"/>
+                                        <rect x="75" y="75" width="5" height="5" fill="white"/>
+                                        <!-- Additional data patterns -->
+                                        <rect x="20" y="90" width="5" height="5"/>
+                                        <rect x="30" y="90" width="5" height="5"/>
+                                        <rect x="50" y="90" width="5" height="5"/>
+                                        <rect x="60" y="90" width="5" height="5"/>
+                                        <rect x="80" y="90" width="5" height="5"/>
+                                        <rect x="90" y="90" width="5" height="5"/>
+                                        <rect x="110" y="90" width="5" height="5"/>
+                                        <rect x="130" y="90" width="5" height="5"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Use your mobile banking app or digital wallet to scan this QR code</p>
+                            <div class="text-xs text-gray-500">
+                                <p>Accepted: PayPal, Venmo, CashApp</p>
+                                <p>Bank Transfer, Google Pay, Apple Pay</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button onclick="confirmPayment('mass')" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold mr-4">I've Made the Payment</button>
+                        <button onclick="cancelPayment('mass')" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors">Cancel</button>
+                    </div>
+                </div>
+
+                <div id="bookingSuccess" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <h4 class="font-semibold">Payment Confirmed!</h4>
+                    <p>Thank you for your payment. Your mass booking request has been submitted successfully. Our parish office will contact you within 24 hours to confirm the details.</p>
+                    <p class="mt-2 text-sm"><strong>Reference ID:</strong> <span id="massRefId"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Certificates Section -->
+        <section id="certificates" class="section hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Request Certificates</h2>
+            
+            <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-md p-8">
+                <form id="certificateForm">
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Full Name *</label>
+                            <input type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Phone Number *</label>
+                            <input type="tel" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Email Address *</label>
+                        <input type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Certificate Type *</label>
+                        <select required id="certificateType" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                            <option value="">Select Certificate Type</option>
+                            <option value="baptism">Baptism Certificate</option>
+                            <option value="marriage">Marriage Certificate</option>
+                            <option value="confirmation">Confirmation Certificate</option>
+                            <option value="first-communion">First Communion Certificate</option>
+                            <option value="death">Death Certificate</option>
+                        </select>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Date of Event (if known)</label>
+                            <input type="date" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">Number of Copies</label>
+                            <select id="certificateCopies" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                                <option value="1">1 Copy</option>
+                                <option value="2">2 Copies</option>
+                                <option value="3">3 Copies</option>
+                                <option value="4">4 Copies</option>
+                                <option value="5">5+ Copies</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">Additional Information</label>
+                        <textarea rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Names of parents, spouse, or other relevant details that might help locate the record"></textarea>
+                    </div>
+
+                    <div class="mb-6 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+                        <h4 class="font-semibold text-yellow-800 mb-2">Processing Information</h4>
+                        <ul class="text-sm text-yellow-700 space-y-1">
+                            <li>• Certificate processing takes 3-5 business days</li>
+                            <li>• Fee: $10 per certificate (payable upon pickup)</li>
+                            <li>• Valid ID required for pickup</li>
+                            <li>• Certificates can be mailed for an additional $5 shipping fee</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-semibold">Proceed to Payment</button>
+                </form>
+
+                <!-- Payment Section for Certificate Request -->
+                <div id="certificatePaymentSection" class="hidden mt-8 p-6 bg-gray-50 rounded-lg border">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Complete Your Payment</h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <!-- Payment Details -->
+                        <div class="bg-white p-4 rounded-lg">
+                            <h4 class="font-semibold mb-3">Payment Details</h4>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex justify-between">
+                                    <span>Certificate Fee (<span id="certCopiesDisplay">1</span> copy):</span>
+                                    <span class="font-semibold" id="certFeeDisplay">$10.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span>Processing Fee:</span>
+                                    <span class="font-semibold">$1.50</span>
+                                </div>
+                                <div class="border-t pt-2 flex justify-between font-semibold">
+                                    <span>Total Amount:</span>
+                                    <span id="certTotalDisplay">$11.50</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- QR Code Payment -->
+                        <div class="bg-white p-4 rounded-lg text-center">
+                            <h4 class="font-semibold mb-3">Scan to Pay</h4>
+                            <div class="bg-gray-100 p-4 rounded-lg mb-3">
+                                <!-- Different QR Code SVG for certificates -->
+                                <svg width="150" height="150" viewBox="0 0 150 150" class="mx-auto">
+                                    <rect width="150" height="150" fill="white"/>
+                                    <!-- QR Code pattern -->
+                                    <g fill="black">
+                                        <!-- Corner squares -->
+                                        <rect x="10" y="10" width="30" height="30"/>
+                                        <rect x="110" y="10" width="30" height="30"/>
+                                        <rect x="10" y="110" width="30" height="30"/>
+                                        <!-- Inner corner squares -->
+                                        <rect x="15" y="15" width="20" height="20" fill="white"/>
+                                        <rect x="115" y="15" width="20" height="20" fill="white"/>
+                                        <rect x="15" y="115" width="20" height="20" fill="white"/>
+                                        <rect x="20" y="20" width="10" height="10"/>
+                                        <rect x="120" y="20" width="10" height="10"/>
+                                        <rect x="20" y="120" width="10" height="10"/>
+                                        <!-- Different data pattern for certificates -->
+                                        <rect x="45" y="25" width="5" height="5"/>
+                                        <rect x="55" y="25" width="5" height="5"/>
+                                        <rect x="65" y="25" width="5" height="5"/>
+                                        <rect x="75" y="25" width="5" height="5"/>
+                                        <rect x="85" y="25" width="5" height="5"/>
+                                        <rect x="95" y="25" width="5" height="5"/>
+                                        <rect x="45" y="35" width="5" height="5"/>
+                                        <rect x="65" y="35" width="5" height="5"/>
+                                        <rect x="85" y="35" width="5" height="5"/>
+                                        <rect x="95" y="35" width="5" height="5"/>
+                                        <!-- More unique pattern -->
+                                        <rect x="25" y="45" width="5" height="5"/>
+                                        <rect x="35" y="45" width="5" height="5"/>
+                                        <rect x="55" y="45" width="5" height="5"/>
+                                        <rect x="75" y="45" width="5" height="5"/>
+                                        <rect x="95" y="45" width="5" height="5"/>
+                                        <rect x="115" y="45" width="5" height="5"/>
+                                        <rect x="125" y="45" width="5" height="5"/>
+                                        <!-- Center pattern -->
+                                        <rect x="65" y="65" width="20" height="20"/>
+                                        <rect x="70" y="70" width="10" height="10" fill="white"/>
+                                        <rect x="75" y="75" width="5" height="5"/>
+                                        <!-- Bottom pattern -->
+                                        <rect x="25" y="85" width="5" height="5"/>
+                                        <rect x="35" y="85" width="5" height="5"/>
+                                        <rect x="45" y="85" width="5" height="5"/>
+                                        <rect x="55" y="85" width="5" height="5"/>
+                                        <rect x="95" y="85" width="5" height="5"/>
+                                        <rect x="105" y="85" width="5" height="5"/>
+                                        <rect x="125" y="85" width="5" height="5"/>
+                                    </g>
+                                </svg>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-3">Use your mobile banking app or digital wallet to scan this QR code</p>
+                            <div class="text-xs text-gray-500">
+                                <p>Accepted: PayPal, Venmo, CashApp</p>
+                                <p>Bank Transfer, Google Pay, Apple Pay</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button onclick="confirmPayment('certificate')" class="bg-green-600 text-white px-8 py-3 rounded-lg hover:bg-green-700 transition-colors font-semibold mr-4">I've Made the Payment</button>
+                        <button onclick="cancelPayment('certificate')" class="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600 transition-colors">Cancel</button>
+                    </div>
+                </div>
+
+                <div id="certificateSuccess" class="hidden mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                    <h4 class="font-semibold">Payment Confirmed!</h4>
+                    <p>Your certificate request and payment have been received successfully. We will contact you within 2 business days with availability and pickup information.</p>
+                    <p class="mt-2 text-sm"><strong>Reference ID:</strong> <span id="certRefId"></span></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Calendar Section -->
+        <section id="calendar" class="section hidden">
+            <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center">Mass Calendar</h2>
+            
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center justify-between mb-6">
+                    <button onclick="changeMonth(-1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">← Previous</button>
+                    <h3 id="currentMonth" class="text-xl font-semibold">December 2024</h3>
+                    <button onclick="changeMonth(1)" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Next →</button>
+                </div>
+
+                <div class="grid grid-cols-7 gap-1 mb-4">
+                    <div class="text-center font-semibold p-2 bg-gray-100">Sun</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Mon</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Tue</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Wed</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Thu</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Fri</div>
+                    <div class="text-center font-semibold p-2 bg-gray-100">Sat</div>
+                </div>
+
+                <div id="calendarGrid" class="grid grid-cols-7 gap-1">
+                    <!-- Calendar days will be generated by JavaScript -->
+                </div>
+
+                <div class="mt-6 flex flex-wrap gap-4 justify-center">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-green-200 rounded"></div>
+                        <span class="text-sm">Available</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-red-200 rounded"></div>
+                        <span class="text-sm">Booked</span>
+                    </div>
+                    <div class="flex items-center space-x-2">
+                        <div class="w-4 h-4 bg-blue-200 rounded"></div>
+                        <span class="text-sm">Regular Mass</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Information</h4>
+                    <p class="mb-2">📍 123 Church Street, Your City</p>
+                    <p class="mb-2">📞 (555) 123-4567</p>
+                    <p class="mb-2">✉️ info@stmarysparish.org</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Office Hours</h4>
+                    <p class="mb-2">Monday - Friday: 9:00 AM - 5:00 PM</p>
+                    <p class="mb-2">Saturday: 9:00 AM - 3:00 PM</p>
+                    <p class="mb-2">Sunday: After all masses</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Emergency Contact</h4>
+                    <p class="mb-2">For urgent pastoral care:</p>
+                    <p class="mb-2">📞 (555) 123-4567 ext. 911</p>
+                    <p class="text-sm text-gray-400">Available 24/7</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center">
+                <p>&copy; 2024 St. Mary's Parish. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let currentDate = new Date();
+        let currentSection = 'home';
+
+        // Sample mass bookings data
+        const massBookings = {
+            '2024-12-15': [
+                { time: '10:00 AM', type: 'Wedding Mass', status: 'booked' },
+                { time: '2:00 PM', type: 'Available', status: 'available' }
+            ],
+            '2024-12-22': [
+                { time: '8:00 AM', type: 'Baptism', status: 'booked' },
+                { time: '12:00 PM', type: 'Memorial Mass', status: 'booked' }
+            ],
+            '2024-12-25': [
+                { time: '12:00 AM', type: 'Christmas Midnight Mass', status: 'booked' },
+                { time: '8:00 AM', type: 'Christmas Morning Mass', status: 'booked' },
+                { time: '10:00 AM', type: 'Christmas Morning Mass', status: 'booked' }
+            ]
+        };
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionName).classList.remove('hidden');
+            currentSection = sectionName;
+
+            // Update navigation
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-blue-300', 'font-semibold');
+            });
+
+            // If calendar section, generate calendar
+            if (sectionName === 'calendar') {
+                generateCalendar();
+            }
+        }
+
+        function generateCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            
+            // Update month display
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'];
+            document.getElementById('currentMonth').textContent = `${monthNames[month]} ${year}`;
+
+            // Get first day of month and number of days
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+            const calendarGrid = document.getElementById('calendarGrid');
+            calendarGrid.innerHTML = '';
+
+            // Add empty cells for days before month starts
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                emptyDay.className = 'calendar-day bg-gray-50';
+                calendarGrid.appendChild(emptyDay);
+            }
+
+            // Add days of the month
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayElement = document.createElement('div');
+                dayElement.className = 'calendar-day bg-white p-2';
+                
+                const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                
+                let dayContent = `<div class="font-semibold mb-1">${day}</div>`;
+                
+                // Add regular Sunday masses
+                const dayOfWeek = new Date(year, month, day).getDay();
+                if (dayOfWeek === 0) { // Sunday
+                    dayContent += '<div class="mass-slot bg-blue-200">8:00 AM Regular</div>';
+                    dayContent += '<div class="mass-slot bg-blue-200">10:00 AM Regular</div>';
+                    dayContent += '<div class="mass-slot bg-blue-200">12:00 PM Regular</div>';
+                    dayContent += '<div class="mass-slot bg-blue-200">6:00 PM Regular</div>';
+                }
+
+                // Add special bookings
+                if (massBookings[dateStr]) {
+                    massBookings[dateStr].forEach(booking => {
+                        const statusClass = booking.status === 'booked' ? 'booked' : 'available';
+                        dayContent += `<div class="mass-slot ${statusClass}">${booking.time} ${booking.type}</div>`;
+                    });
+                }
+
+                dayElement.innerHTML = dayContent;
+                calendarGrid.appendChild(dayElement);
+            }
+        }
+
+        function changeMonth(direction) {
+            currentDate.setMonth(currentDate.getMonth() + direction);
+            generateCalendar();
+        }
+
+        function updateCertificatePayment() {
+            const copies = parseInt(document.getElementById('certificateCopies').value) || 1;
+            const certFee = copies * 10;
+            const processingFee = 1.50;
+            const total = certFee + processingFee;
+
+            document.getElementById('certCopiesDisplay').textContent = copies;
+            document.getElementById('certFeeDisplay').textContent = `$${certFee.toFixed(2)}`;
+            document.getElementById('certTotalDisplay').textContent = `$${total.toFixed(2)}`;
+        }
+
+        function generateReferenceId() {
+            return 'REF' + Date.now().toString().slice(-8) + Math.random().toString(36).substr(2, 4).toUpperCase();
+        }
+
+        function confirmPayment(type) {
+            const refId = generateReferenceId();
+            
+            if (type === 'mass') {
+                document.getElementById('massRefId').textContent = refId;
+                document.getElementById('massPaymentSection').classList.add('hidden');
+                document.getElementById('bookingSuccess').classList.remove('hidden');
+            } else {
+                document.getElementById('certRefId').textContent = refId;
+                document.getElementById('certificatePaymentSection').classList.add('hidden');
+                document.getElementById('certificateSuccess').classList.remove('hidden');
+            }
+
+            // Auto-hide success message after 10 seconds
+            setTimeout(() => {
+                if (type === 'mass') {
+                    document.getElementById('bookingSuccess').classList.add('hidden');
+                    document.getElementById('massBookingForm').reset();
+                } else {
+                    document.getElementById('certificateSuccess').classList.add('hidden');
+                    document.getElementById('certificateForm').reset();
+                }
+            }, 10000);
+        }
+
+        function cancelPayment(type) {
+            if (type === 'mass') {
+                document.getElementById('massPaymentSection').classList.add('hidden');
+            } else {
+                document.getElementById('certificatePaymentSection').classList.add('hidden');
+            }
+        }
+
+        // Form submissions
+        document.getElementById('massBookingForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('massPaymentSection').classList.remove('hidden');
+            this.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        });
+
+        document.getElementById('certificateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            updateCertificatePayment();
+            document.getElementById('certificatePaymentSection').classList.remove('hidden');
+            this.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        });
+
+        // Update certificate payment when copies change
+        document.getElementById('certificateCopies').addEventListener('change', updateCertificatePayment);
+
+        // Set minimum date to today for booking forms
+        const today = new Date().toISOString().split('T')[0];
+        document.querySelectorAll('input[type="date"]').forEach(input => {
+            input.min = today;
+        });
+
+        // Initialize
+        generateCalendar();
+        updateCertificatePayment();
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97211ebd96c448e0',t:'MTc1NTY4NDgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QuemahHR</title>
+
+  <!-- Fonts & Bootstrap -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #f7f8fa;
+      margin: 0;
+      padding: 0;
+    }
+
+    .navbar-custom {
+      background-color: white !important;
+      height: 150px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .logo-img {
+      height: 200px;
+      width: 200px;
+      object-fit: cover;
+    }
+
+    .navbar-center-logo {
+      position: absolute;
+      left: 50%;
+      top: 60%;
+      transform: translate(-50%, -50%);
+    }
+
+    .navbar-nav .nav-link {
+      color: #012d1e !important;
+      font-weight: 500;
+      font-size: 1rem;
+      padding-top: 55px;
+    }
+
+    .dropdown-menu {
+      width: 700px;
+      padding: 20px;
+    }
+
+    .dropdown-header {
+      font-size: 0.9rem;
+      font-weight: bold;
+      color: #555;
+      padding: 4px 0 4px 0.75rem;
+      margin: 0;
+    }
+
+    .dropdown-item {
+      font-size: 0.9rem;
+      padding: 4px 0 4px 0.75rem;
+    }
+
+    @media (max-width: 768px) {
+      .dropdown-menu {
+        width: 100%;
+      }
+    }
+
+    /* Banner styles */
+    .banner {
+         display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(to right, #0e4d8f, #4f84c4); /* vivid blue fade */
+  border-radius: 25px;
+  padding: 30px 40px;
+  color: white;
+  max-width: 900px;
+  margin: 40px auto;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .content {
+      max-width: 60%;
+    }
+
+    .content h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .content p {
+      margin: 10px 0 20px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #e0f7f5;
+    }
+
+    .cta-button {
+      background: linear-gradient(to right, #4d59ff, #5a62ff);
+      padding: 10px 20px;
+      border: none;
+      border-radius: 25px;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .right-section {
+      text-align: right;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .logo img {
+      height: 20px;
+      margin-left: 8px;
+    }
+.illustration {
+  height: 180px;    /* bigger size */
+  width: 180px;     /* match height for perfect circle */
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white; /* optional clean border */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* subtle depth */
+}
+
+
+
+
+
+
+
+    @media (max-width: 768px) {
+      .banner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .content {
+        max-width: 100%;
+      }
+
+      .right-section {
+        align-items: flex-start;
+        margin-top: 20px;
+      }
+    }
+  </style>
+   <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f4f6fb;
+      padding: 40px;
+      margin: 0;
+    }
+
+   .category-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  max-width: 1100px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.category-card {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 14px;
+  padding: 14px 20px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  min-height: 60px;
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+.icon-wrapper {
+  background: linear-gradient(135deg, #6a11cb, #2575fc);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  margin-right: 14px;
+  flex-shrink: 0;
+}
+
+.icon-wrapper img {
+  height: 20px;
+  width: 20px;
+  filter: brightness(0) invert(1);
+} 
+
+.label {
+  font-size: 15px;
+  color: #1c1c1c;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.arrow {
+  margin-left: 6px;
+  font-size: 14px;
+  color: #888;
+}
+
+.section-title {
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.4rem;
+      margin: 40px 0 20px;
+        }
+
+   .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      max-width: 1000px;
+      margin: auto;
+      padding: 0 20px;
+    }
+    
+      .company-card {
+    background: white;
+    border-radius: 12px;
+    padding: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .company-card img {
+    height: 40px;
+    margin-bottom: 12px;
+  }
+
+  .company-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  }
+
+
+    /* Individual gradients (optional - unique colors) */
+    .card-1 .icon-wrapper { background: linear-gradient(135deg, #00c6ff, #0072ff); }
+    .card-2 .icon-wrapper { background: linear-gradient(135deg, #f7971e, #ffd200); }
+    .card-3 .icon-wrapper { background: linear-gradient(135deg, #00b09b, #96c93d); }
+    .card-4 .icon-wrapper { background: linear-gradient(135deg, #e100ff, #7f00ff); }
+    .card-5 .icon-wrapper { background: linear-gradient(135deg, #f953c6, #b91d73); }
+    .card-6 .icon-wrapper { background: linear-gradient(135deg, #ff6a00, #ee0979); }
+    .card-7 .icon-wrapper { background: linear-gradient(135deg, #fc354c, #0abfbc); }
+    .card-8 .icon-wrapper { background: linear-gradient(135deg, #00f2fe, #4facfe); }
+    .card-9 .icon-wrapper { background: linear-gradient(135deg, #da22ff, #9733ee); }
+    .card-10 .icon-wrapper { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+    .card-11 .icon-wrapper { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+
+    @media (max-width: 600px) {
+      .category-card {
+        width: 100%;
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-sm navbar-light navbar-custom">
+  <div class="container-fluid">
+    <!-- Navbar toggler (mobile) -->
+    <button class="navbar-toggler ms-auto mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <!-- Left-side Dropdowns -->
+      <ul class="navbar-nav me-auto">
+        <!-- Jobs Dropdown -->
+        <li class="nav-item dropdown pt-4">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Jobs</a>
+          <ul class="dropdown-menu">
+            <div class="row">
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Popular Categories</h6>
+                <a class="dropdown-item" href="#">IT Jobs</a>
+                <a class="dropdown-item" href="#">Sales Jobs</a>
+                <a class="dropdown-item" href="#">Marketing Jobs</a>
+                <a class="dropdown-item" href="#">Data Science Jobs</a>
+                <a class="dropdown-item" href="#">HR Jobs</a>
+                <a class="dropdown-item" href="#">Engineering Jobs</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Jobs in Demand</h6>
+                <a class="dropdown-item" href="#">Fresher Jobs</a>
+                <a class="dropdown-item" href="#">MNC Jobs</a>
+                <a class="dropdown-item" href="#">Remote Jobs</a>
+                <a class="dropdown-item" href="#">Work from Home Jobs</a>
+                <a class="dropdown-item" href="#">Walk-in Jobs</a>
+                <a class="dropdown-item" href="#">Part-time Jobs</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Jobs by Location</h6>
+                <a class="dropdown-item" href="#">Jobs in Delhi</a>
+                <a class="dropdown-item" href="#">Jobs in Mumbai</a>
+                <a class="dropdown-item" href="#">Jobs in Bangalore</a>
+                <a class="dropdown-item" href="#">Jobs in Hyderabad</a>
+                <a class="dropdown-item" href="#">Jobs in Chennai</a>
+                <a class="dropdown-item" href="#">Jobs in Pune</a>
+              </div>
+            </div>
+          </ul>
+        </li>
+
+        <!-- Companies Dropdown -->
+        <li class="nav-item dropdown pt-4">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Companies</a>
+          <ul class="dropdown-menu">
+            <div class="row">
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Explore Categories</h6>
+                <a class="dropdown-item" href="#">Unicorn</a>
+                <a class="dropdown-item" href="#">MNC</a>
+                <a class="dropdown-item" href="#">Startup</a>
+                <a class="dropdown-item" href="#">Product Based</a>
+                <a class="dropdown-item" href="#">Internet</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Explore Collections</h6>
+                <a class="dropdown-item" href="#">Top Companies</a>
+                <a class="dropdown-item" href="#">IT Companies</a>
+                <a class="dropdown-item" href="#">Fintech Companies</a>
+                <a class="dropdown-item" href="#">Sponsored Companies</a>
+                <a class="dropdown-item" href="#">Featured Companies</a>
+                <a class="dropdown-item" href="#">Research Companies</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">by AmbitionBox</h6>
+                <a class="dropdown-item" href="#">Interview Questions</a>
+                <a class="dropdown-item" href="#">Company Salaries</a>
+                <a class="dropdown-item" href="#">Company Reviews</a>
+                <a class="dropdown-item" href="#">Salary Calculator</a>
+              </div>
+            </div>
+          </ul>
+        </li>
+
+        <!-- Services Dropdown -->
+        <li class="nav-item dropdown pt-4">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">Services</a>
+          <ul class="dropdown-menu">
+            <div class="row">
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Resume Writing</h6>
+                <a class="dropdown-item" href="#">Text Resume</a>
+                <a class="dropdown-item" href="#">Visual Resume</a>
+                <a class="dropdown-item" href="#">Resume Critique</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Find Jobs</h6>
+                <a class="dropdown-item" href="#">Jobs4U</a>
+                <a class="dropdown-item" href="#">Priority Applicant</a>
+                <a class="dropdown-item" href="#">Contact Us</a>
+                <a class="dropdown-item" href="#">Get Recruiter's Attention</a>
+              </div>
+              <div class="col-md-4">
+                <h6 class="dropdown-header">Resume Tools</h6>
+                <a class="dropdown-item" href="#">Resume Display</a>
+                <a class="dropdown-item" href="#">Monthly Subscriptions</a>
+                <a class="dropdown-item" href="#">Basic & Premium Plans</a>
+                <a class="dropdown-item" href="#">Free Resume Resources</a>
+                <a class="dropdown-item" href="#">Resume Maker</a>
+                <a class="dropdown-item" href="#">Resume Quality Score</a>
+                <a class="dropdown-item" href="#">Resume Samples</a>
+                <a class="dropdown-item" href="#">Job Letter Samples</a>
+              </div>
+            </div>
+          </ul>
+        </li>
+      </ul>
+
+      <!-- Center Logo -->
+      <a class="navbar-brand navbar-center-logo" href="#">
+        <img src="ab.png" alt="QuemahHR Logo" class="logo-img" />
+      </a>
+
+      <!-- Right-side Links -->
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item pt-4">
+          <a class="nav-link" href="form.html">Login</a>
+        </li>
+        <li class="nav-item pt-4">
+          <a class="nav-link" href="https://quemahtech.com/contact">Contact</a>
+        </li>
+        <li class="nav-item dropdown pt-4">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">For Employers</a>
+          <ul class="dropdown-menu">
+            <div class="row">
+              <div class="col-md-12">
+                <a class="dropdown-item" href="#">Buy Online</a>
+                <a class="dropdown-item" href="#">QuemahHR Talent Cloud</a>
+                <a class="dropdown-item" href="#">Post a Job <strong>(FREE)</strong></a>
+                <a class="dropdown-item" href="#">Employer Login</a>
+              </div>
+            </div>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- Banner (Outside Navbar) -->
+<div class="banner">
+  <div class="content">
+    <h2>Smooth Client Onboarding For Recruitment Success</h2>
+    <p></p>
+    <a href="#" class="cta-button">Start for free</a>
+  </div>
+  <div class="right-section">
+    <img src="ab.jpeg" alt="Illustration" class="illustration">
+  </div>
+</div>
+
+
+
+<!-- Top Companies -->
+
+
+<div class="category-container">
+  <div class="category-card card-1" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Remote">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/home.png" alt="Remote"></div>
+    <div class="label">Remote <span class="arrow">›</span></div>
+  </div>
+  
+  <div class="category-card card-2" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="MNC">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/company.png" alt="MNC"></div>
+    <div class="label">MNC <span class="arrow">›</span></div>
+  </div>
+  
+  <div class="category-card card-3" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Banking & Finance">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/rupee.png" alt="Banking"></div>
+    <div class="label">Banking & Fin <span class="arrow">›</span></div>
+  </div>
+  
+  <div class="category-card card-4" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Internship">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/diploma.png" alt="Internship"></div>
+    <div class="label">Internship <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-5" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Fortune 500">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/medal2--v1.png" alt="Fortune 500"></div>
+    <div class="label">Fortune 500 <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-6" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Marketing">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/combo-chart--v1.png" alt="Marketing"></div>
+    <div class="label">Marketing <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-7" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="HR">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/user-group-man-man.png" alt="HR"></div>
+    <div class="label">HR <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-8" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Software Development">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/laptop-coding.png" alt="Software"></div>
+    <div class="label">Software &... <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-9" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Analytics">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/search--v1.png" alt="Analytics"></div>
+    <div class="label">Analytics <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-10" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Supply Chain">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/box.png" alt="Supply Chain"></div>
+    <div class="label">Supply Ch... <span class="arrow">›</span></div>
+  </div>
+
+  <div class="category-card card-11" data-bs-toggle="modal" data-bs-target="#categoryFormModal" data-category="Startup">
+    <div class="icon-wrapper"><img src="https://img.icons8.com/ios/50/rocket--v1.png" alt="Startup"></div>
+    <div class="label">Startup <span class="arrow">›</span></div>
+  </div>
+</div>
+
+<!-- Optional Section: Newsletter -->
+<div style="background: linear-gradient(to right, #0e4d8f, #4f84c4); padding: 40px 20px; text-align: center; color: white;">
+  <h4 style="font-weight: 600; margin-bottom: 10px;">Subscribe to our newsletter</h4>
+  <p style="margin-bottom: 20px;">Get updates on latest jobs, trends and insights.</p>
+  <form class="d-flex justify-content-center" style="gap: 10px; flex-wrap: wrap;">
+    <input type="email" placeholder="Enter your email" class="form-control" style="max-width: 300px;">
+    <button class="btn btn-light" type="submit" style="font-weight: 600;">Subscribe</button>
+  </form>
+</div>
+<footer style="background: linear-gradient(to right, #0e4d8f, #4f84c4); color: white; padding: 40px 20px; margin-top: 60px;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5>QuemahHR</h5>
+        <p>Your trusted HR solutions partner for smarter hiring and career growth.</p>
+      </div>
+      <div class="col-md-4">
+        <h6>Quick Links</h6>
+        <ul class="list-unstyled">
+          <li><a href="#" style="color: white; text-decoration: none;">Jobs</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Companies</a></li>
+          <li><a href="#" style="color: white; text-decoration: none;">Contact</a></li>
+          <li><a href="form.html" style="color: white; text-decoration: none;">Login</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h6>Follow Us</h6>
+        <a href="#" style="color: white; margin-right: 10px;"><img src="https://img.icons8.com/ios-filled/24/ffffff/facebook-new.png"/></a>
+        <a href="#" style="color: white; margin-right: 10px;"><img src="https://img.icons8.com/ios-filled/24/ffffff/twitter.png"/></a>
+        <a href="#" style="color: white; margin-right: 10px;"><img src="https://img.icons8.com/ios-filled/24/ffffff/linkedin.png"/></a>
+        <a href="#" style="color: white;"><img src="https://img.icons8.com/ios-filled/24/ffffff/instagram-new.png"/></a>
+      </div>
+    </div>
+    <div class="text-center mt-4">
+      <small>&copy; 2025 QuemahHR. All rights reserved.</small>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Category Form Modal -->
+<div class="modal fade" id="categoryFormModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="formTitle">Category Form</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="formContent" style="min-height: 300px;">
+        <p class="text-center">Loading form...</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('categoryFormModal').addEventListener('show.bs.modal', function (event) {
+    let card = event.relatedTarget.closest('.category-card'); // Ensure we always get the card
+    let category = card.getAttribute('data-category');
+    
+    // Change modal title
+    document.getElementById('formTitle').textContent = category + " Application Form";
+    
+    // Load form.html inside modal body
+    fetch('form.html')
+      .then(response => response.text())
+      .then(data => {
+        document.getElementById('formContent').innerHTML = data;
+      })
+      .catch(error => {
+        document.getElementById('formContent').innerHTML = '<p class="text-danger">Failed to load form.</p>';
+      });
+});
+</script>
+
+
+</body>
+</html>
